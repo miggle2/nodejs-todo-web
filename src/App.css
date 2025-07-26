@@ -56,3 +56,8 @@ body{
   background-color: gainsboro;
   color:white;
 }
+
+.line-through {
+  text-decoration: line-through;
+  color: gray;
+}
