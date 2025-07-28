@@ -23,7 +23,7 @@ const LoginPage = () => {
         sessionStorage.setItem("token", response.data.token);
         api.defaults.headers["authorization"] = "Bearer " + response.data.token;
         setError("");
-        navigate("/");
+        navigate("/todo");
       } else {
         throw new Error(response.message);
       }
