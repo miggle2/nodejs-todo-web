@@ -4,13 +4,15 @@ import api from "../utils/api";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import { Navigate } from "react-router-dom";
 
-const TodoPage = () => {
+const TodoPage = ({ setUser }) => {
   const [todoList, setTodoList] = useState([]);
   const [todoValue, setTodoValue] = useState("");
 
   const getTasks = async () => {
     const response = await api.get("/tasks");
+    console.log("taskList", response.data.data);
     setTodoList(response.data.data);
   };
   useEffect(() => {
@@ -56,8 +58,30 @@ const TodoPage = () => {
       console.log("error", error);
     }
   };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    setUser(null);
+    return <Navigate to="/login" />;
+  };
   return (
     <Container>
+      <div style={{ position: "relative", padding: "20px" }}>
+        <span
+          onClick={handleLogout}
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 0,
+            fontSize: 13,
+            cursor: "pointer",
+            color: "lightblue", 
+            textDecoration: "underline", 
+          }}
+        >
+          로그아웃
+        </span>
+      </div>
       <Row className="add-item-row">
         <Col xs={12} sm={10}>
           <input
@@ -77,8 +101,8 @@ const TodoPage = () => {
 
       <TodoBoard
         todoList={todoList}
-        deleteItem={deleteItem}
-        toggleComplete={toggleComplete}
+        onDelete={deleteItem}
+        onComplete={toggleComplete}
       />
     </Container>
   );

@@ -11,6 +11,7 @@ const TodoItem = ({ item, onDelete, onComplete }) => {
           >
             {item.task}
           </div>
+          <div>by {item.author.name}</div>
 
           <div>
             <button
